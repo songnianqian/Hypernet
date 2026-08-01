@@ -2,10 +2,6 @@
 
 A GPT-2 transformer augmented with a **shared clustered hypernetwork controller**, evaluated on two tasks: **WikiText-103** language modeling and **Dyck-k** bracket matching. The hypernet routes mid-network hidden states through a small set of learned centroids and injects a structured "reasoning signal" into the feed-forward block. On Dyck, a per-configuration **addressable memory bank** is added to test recursive, depth-generalizing behavior.
 
-> **Scope of the claim.** This repository reports two empirical findings: (1) the hypernet controller changes language-model behavior on WikiText, and (2) on Dyck, the controller-plus-memory configuration closes brackets correctly at depths well beyond its training depth (e.g. ~70% close-bracket accuracy at depth 300 when trained only to depth 10), roughly 15–20 points above the same model with the hypernet disabled. We treat **Turing-completeness as a motivating question — "what can this system compute?" — not as a proven theorem.** The evidence here is depth extrapolation and an ablation gap, which is consistent with recursive computation but is not a formal universality proof. See [Limitations](#limitations).
-
----
-
 ## Table of contents
 
 - [Motivation](#motivation)
@@ -139,7 +135,6 @@ Standard autoregressive language modeling on WikiText-103. This configuration us
 | GPT-2 backbone, hypernet **OFF** | 20 layers, hypernet_start=20 | [TODO] |
 | HyperNet **ON** | 20 layers, hypernet_start=10 | [TODO] |
 
-> **TODO:** fill in perplexities (and note the eval split, sequence length, and step count used).
 
 **Abstraction evidence (recommended plot).** Because the controller's whole premise is that a large vocabulary collapses onto few effective clusters, the most direct evidence is a **centroid-usage histogram / usage entropy** measured over the WikiText eval set: how many of the 128 centroids are actually used, and how peaked the routing is. If routing concentrates on an effective handful of centroids, that directly supports the abstraction claim.
 
@@ -228,15 +223,6 @@ pip install -r requirements.txt
 
 **Requirements** (pin to what you actually run):
 
-```
-torch>=[TODO]
-transformers>=[TODO]
-numpy
-```
-
-> **TODO:** add a `requirements.txt` with exact versions of `torch` and `transformers` from your environment.
-
----
 
 ## Reproducing the experiments
 
@@ -251,11 +237,10 @@ numpy
 # TODO: replace with your actual training command
 python train.py \
   --task wikitext \
-  --data_dir [TODO: path to WikiText-103] \
+  --data_dir  \
   --num_layers 20 \
   --hypernet_start_layer 10 \
-  --num_centroids 128 \
-  [TODO: other flags — lr, batch size, max_length, steps]
+  --num_centroids 128 
 
 # Ablation (hypernet OFF): set --hypernet_start_layer 20
 ```
@@ -268,21 +253,15 @@ python train_dyck.py \
   --num_layers 12 \
   --hypernet_start_layer 6 \
   --use_memory --memory_slots 8 --memory_output_dim 32 \
-  --train_max_depth [10 or 20] \
-  [TODO: other flags]
+  --train_max_depth [10 or 20] 
 
 # Evaluation at deeper depths (load the same checkpoint, test on depth 100–400):
 python eval_dyck.py \
   --checkpoint [TODO] \
-  --eval_max_depth 300 \
-  [TODO: eval flags]
+  --eval_max_depth 300 
 
 # Ablation (hypernet OFF): set --hypernet_start_layer 12 and drop --use_memory
 ```
-
-> **TODO:** the Dyck training/eval scripts will be uploaded; replace the commands above with the real ones (and confirm the exact flags for setting train vs. eval depth and for regenerating eval sets).
-
----
 
 ## Limitations
 
@@ -299,17 +278,13 @@ We state these plainly, because the computational claim invites them:
 ## Citation
 
 ```bibtex
-@software{[TODO-key],
-  author  = {[TODO: your name / handle]},
-  title   = {HyperNet-GPT2: A Shared Clustered Hypernetwork Controller for GPT-2},
-  year    = {2026},
-  url     = {https://github.com/[TODO-your-handle]/hypernet-gpt2}
+@software{qian_hypernet_2026,
+  author = {Qian, Songnian},
+  title  = {HyperNet-GPT2: A Shared Clustered Hypernetwork Controller for GPT-2},
+  year   = {2026},
+  url    = {https://github.com/songnianqian/Hypernet}
 }
 ```
-
-> **TODO:** fill author and repo URL.
-
----
 
 ## License
 
