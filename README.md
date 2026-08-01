@@ -67,10 +67,6 @@ Routing on $\hat{Y}$ (rather than on raw token embeddings) means the centroids c
 
 **Step 2 — soft centroid assignment.** With centroids also L2-normalized ($\hat{c}_i$), assignment is a cosine-similarity softmax — a full distribution over centroids, not a hard pick:
 
-$$
-p_i \;=\; \operatorname{softmax}_i\!\big(\langle \hat{Y}, \hat{c}_i\rangle\big), \qquad p \in \mathbb{R}^{M}.
-$$
-
 (An optional reinforcement-learning path can bias this distribution and sample a discrete centroid; it is **off by default** and not used in the reported results.)
 
 **Step 3 — the reasoning vector (three channels).** The controller emits a `3M = 384`-dimensional reasoning vector per token, concatenating three centroid-space signals:
