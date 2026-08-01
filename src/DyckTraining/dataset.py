@@ -1,3 +1,7 @@
+# MIT License
+#
+# Copyright (c) 2026 Songnian Qian
+
 import torch
 from torch.utils.data import Dataset
 from pathlib import Path

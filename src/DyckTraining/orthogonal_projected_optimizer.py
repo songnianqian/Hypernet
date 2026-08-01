@@ -1,3 +1,8 @@
+# MIT License
+#
+# Copyright (c) 2026 Songnian Qian
+
+
 """
 Custom Optimizer with Orthogonal Gradient Projection
 

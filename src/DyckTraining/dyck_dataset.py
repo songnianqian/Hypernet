@@ -1,4 +1,7 @@
-# dyck_dataset.py
+# MIT License
+#
+# Copyright (c) 2026 Songnian Qian
+
 import random
 from torch.utils.data import Dataset
 import torch

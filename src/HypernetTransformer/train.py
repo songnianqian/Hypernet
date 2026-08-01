@@ -1,3 +1,8 @@
+# MIT License
+#
+# Copyright (c) 2026 Songnian Qian
+
+
 #!/usr/bin/env python3
 """
 Train HyperNet GPT-2
