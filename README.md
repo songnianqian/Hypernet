@@ -35,6 +35,8 @@ We are explicit that this is **evidence, not proof**. The results below are cons
 
 ## Shared architecture: the HyperNet controller
 
+![Hypernet Architecture](https://github.com/songnianqian/Hypernet/raw/main/hypernet_injection.svg)
+
 Both configurations share the same controller. The only difference is that the Dyck configuration adds an addressable memory bank (described in [Configuration B](#addressable-memory-bank)).
 
 ### Base stack
