@@ -67,7 +67,6 @@ Routing on $\hat{Y}$ (rather than on raw token embeddings) means the centroids c
 
 **Step 2 — soft centroid assignment.** With centroids also L2-normalized ($\hat{c}_i$), assignment is a cosine-similarity softmax — a full distribution over centroids, not a hard pick:
 
-(An optional reinforcement-learning path can bias this distribution and sample a discrete centroid; it is **off by default** and not used in the reported results.)
 
 **Step 3 — the reasoning vector (three channels).** The controller emits a `3M = 384`-dimensional reasoning vector per token, concatenating three centroid-space signals:
 
@@ -110,13 +109,9 @@ The centroids and perceptrons live in **one** hypernetwork instance reused by ev
 
 ```
 📊 Model Statistics:
-   Total parameters:   [TODO: fill from your build log]
-   Hypernet overhead:  [TODO] ([TODO]%)
+   Total parameters:   131,866,758
+   Hypernet overhead:  7,423,110 (5.63%)
 ```
-
-> **TODO:** paste the real numbers from your `create_hypernet_gpt2(...)` print-out for each config, and state the comparison baseline explicitly (e.g. "vs. a per-layer routing module, sharing reduces the routing parameters by ~N×").
-
----
 
 ## Configuration A — WikiText-103
 
@@ -128,13 +123,14 @@ Standard autoregressive language modeling on WikiText-103. This configuration us
 
 | Model | Config | Perplexity ↓ |
 |---|---|---|
-| GPT-2 backbone, hypernet **OFF** | 20 layers, hypernet_start=20 | [TODO] |
-| HyperNet **ON** | 20 layers, hypernet_start=10 | [TODO] |
+| GPT-2 backbone, hypernet **OFF** | 20 layers, hypernet_start=20 | ~39.0 |
+| HyperNet **ON** | 20 layers, hypernet_start=10 | 39.1400 |
 
 
 **Abstraction evidence (recommended plot).** Because the controller's whole premise is that a large vocabulary collapses onto few effective clusters, the most direct evidence is a **centroid-usage histogram / usage entropy** measured over the WikiText eval set: how many of the 128 centroids are actually used, and how peaked the routing is. If routing concentrates on an effective handful of centroids, that directly supports the abstraction claim.
 
-> **TODO:** add the centroid-usage entropy / histogram figure (measures "effective number of active hidden-state clusters"). Note this measures clusters over *contextual hidden states*, not raw tokens.
+Centroid usage total: [138369, 691336, 196159, 1213088, 255313, 264186, 1288646, 157135, 286120, 146478, 134540, 61384, 403278, 2843273, 131096, 1303233, 213560, 309711, 238456, 73225, 1292100, 395423, 2290664, 191175, 226423, 281523, 194830, 107360, 889843, 369336, 64296, 193465, 303366, 132988, 57218, 314453, 39616, 253464, 79152, 11025738, 79095, 285208, 1191800, 430301, 533628, 402235, 179872, 285870, 606135, 62634, 112796, 64482, 340879, 535158, 1029254, 762819, 1623111, 255898, 930559, 162162, 250975, 151074, 247420, 4195475, 48692, 575160, 86268, 343718, 282822, 115598, 172067, 3588602, 47487, 91518, 63139, 288460, 44636, 1478991, 561068, 108675, 81311, 2263385, 1801977, 1620286, 206800, 6272015, 3470201, 1435484, 281435, 781134, 67287, 3198524, 277462, 1412424, 887770, 467644, 190338, 45748, 179724, 629450, 50508, 16784, 107658, 133818, 276419, 1693475, 330602, 2493487, 898030, 901154, 86258, 1850030, 68712, 766354, 391409, 489897, 937147, 465296, 212110, 37455, 1065249, 99532, 557970, 218155, 201659, 31502, 68774, 473397]
+Top centroids: [39, 85, 63, 71, 86, 91, 13, 107, 22, 81]
 
 ---
 
