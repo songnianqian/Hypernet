@@ -177,8 +177,6 @@ Trained on shallow depth (max depth 10 or 20), evaluated on depths 200–400. **
 
 > **Honest caveat on non-monotonicity.** Accuracy is **not** strictly monotonic in eval depth — for TD 10, ON is higher at ED 300 (~70%) than at ED 200 (~65%), then drops at ED 400 (~61%). The eval set is regenerated per depth and the sampler's `min_depth` / stop settings mean the depth-200, -300, -400 sets differ in more than depth alone, so small differences between adjacent depths are **not** meaningful. Read these as extrapolation evidence, not a smooth scaling law. The one robust, repeated signal is the ON-vs-OFF gap at matched settings.
 
-> **TODO:** confirm the exact definition of close-bracket accuracy (per-token over all close positions? correct bracket *type* required?), the number of eval samples per depth, and whether ON and OFF were evaluated on identically-generated sets.
-
 ---
 
 ## Planned extension: soft AND/OR routing
